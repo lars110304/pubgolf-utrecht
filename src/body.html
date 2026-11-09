@@ -1,0 +1,138 @@
+<header class="club">
+  <div class="wrap">
+    <h1>Pubgolf Utrecht</h1>
+    <p>Two teams of two play 10 pubs and 8 Albert Heijns through the old town. One sip or one bite is one stroke, and the lowest card at Café 't Pandje wins.</p>
+    <ul class="facts">
+      <li><b>18</b> holes</li><li>Par <b>72</b></li><li><b>2 × 2</b> players</li><li>Tee off <b>14:30</b></li><li>Finish <b>~21:35</b></li><li id="dist-fact"></li>
+    </ul>
+  </div>
+</header>
+<nav aria-label="Sections"><div class="wrap">
+  <a href="#card">Scorecard</a><a href="#route">Route</a><a href="#powerups">Power-ups</a><a href="#rules">Rules</a><a href="#plan">Plan</a>
+</div></nav>
+
+<main class="wrap">
+  <section id="card">
+    <h2>Scorecard</h2>
+    <p class="lede">Count your team's sips on each hole. The first tap on + or − starts from par, so most holes take one or two taps.</p>
+    <div class="status"><p class="leader" id="leader"></p><p class="saved" id="saved">Scores are saved on this device. Keep the card on one phone.</p></div>
+    <div class="teams" id="teams"></div>
+    <div class="scroll"><table class="card">
+      <thead><tr><th>Hole</th><th>Pub and drink</th><th class="c">Par</th><th class="c" id="th-a"></th><th class="c" id="th-b"></th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table></div>
+    <div class="legend">
+      <span><i class="mark eagle">2</i>Eagle or better</span><span><i class="mark birdie">3</i>Birdie</span><span><i class="mark">4</i>Par</span><span><i class="mark bogey">5</i>Bogey</span><span><i class="mark double">6</i>Double or worse</span>
+    </div>
+  </section>
+
+  <section id="route">
+    <h2>The route</h2>
+    <p class="lede">Start at the top of the Oudegracht and work past the Neude to the station, where you buy dinner. After dinner, walk down the Oudegracht to the Twijnstraat, cross east to the Nachtegaalstraat and Biltstraat, and finish on the Nobelstraat.</p>
+    <div class="route">
+      <div>
+        <div class="map" id="map"></div>
+        <div class="maplegend"><span><i class="dot" style="background:var(--fairway)"></i>Front nine pub</span><span><i class="dot" style="background:var(--beer)"></i>Back nine pub</span><span><i style="background:var(--shop)"></i>Albert Heijn</span></div>
+        <div class="btns" id="dirs"></div>
+        <p class="note">North is up. Lines run straight between stops, and pins around the Neude and the Nobelstraat are nudged apart so you can read them. Use the buttons for walking directions.</p>
+      </div>
+      <ol class="legs" id="legs"></ol>
+    </div>
+  </section>
+
+  <section id="powerups">
+    <h2>Power-ups</h2>
+    <p class="lede">Each team draws two before hole 1. A team can draw one more for an eagle or better, and the team behind at The Turn draws one too. Each card works once, and a team can play one card per hole. Change the strokes on the card yourself when a power-up changes them.</p>
+    <div class="hands" id="hands"></div>
+    <dl class="deck" id="deck"></dl>
+  </section>
+
+  <section id="rules">
+    <h2>Rules</h2>
+    <div class="cols">
+      <div>
+        <h3>How a hole works</h3>
+        <ul class="plain">
+          <li>Each team shares one drink per hole and teammates alternate sips. On the jenever and shot holes, each player gets their own.</li>
+          <li>A stroke is one sip by either teammate. The glass leaving your lips ends the sip.</li>
+          <li>Both teams start together. Finish the drink, write the score, take your glass back to the bar and move on.</li>
+          <li>The other team counts your sips. Disputes go to the bartender if they're up for it.</li>
+          <li>Water hazards are mandatory. Water or 0.0 still counts as a full hole.</li>
+          <li>Lowest total after 18 wins. If it's level, the team with more birdies wins. If that's level too, you share the title.</li>
+        </ul>
+        <h3 style="margin-top:18px">Albert Heijn holes</h3>
+        <ul class="plain">
+          <li>Each team buys the item on the card, pays, and plays the hole just outside the shop.</li>
+          <li>AH holes are non-alcoholic. Drinking alcohol on the street is banned in a large part of the city centre, and supermarkets in the centre stop selling alcohol at 22:00.</li>
+          <li>On the stroopwafel, broodje and chocolate holes, a stroke is one bite. The food has to be gone before you leave.</li>
+          <li>Each team's own bill. Cans and bottles go in a bin or back to the shop for the deposit. Littering is +3.</li>
+        </ul>
+        <h3 style="margin-top:18px">Free passes</h3>
+        <ul class="plain">
+          <li>Any player can swap any drink for water or 0.0 at any time, with no penalty.</li>
+          <li>If a pub is full or closed, each team takes par and moves on, or plays a backup from the plan.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Penalties</h3>
+        <table class="pen"><tbody>
+          <tr><td>Spilling</td><td>+1</td></tr>
+          <tr><td>Sipping out of turn</td><td>+1</td></tr>
+          <tr><td>Holding the glass in your dominant hand</td><td>+1</td></tr>
+          <tr><td>Leaving your glass on the table</td><td>+1</td></tr>
+          <tr><td>Emptying a beer, wine or cocktail in one go</td><td>+2</td></tr>
+          <tr><td>Littering a can, bottle or wrapper</td><td>+3</td></tr>
+          <tr><td>Being rude to staff</td><td>+5 and you buy them a drink</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <section id="plan">
+    <h2>The plan</h2>
+    <div class="cols">
+      <div>
+        <h3>On the day, based on a Saturday</h3>
+        <ol class="time">
+          <li><b>14:15</b><span>Meet at Café Weerdzicht, Oudegracht 1. Fill in the team names and draw power-ups.</span></li>
+          <li><b>14:30</b><span>Tee off at hole 1. Pub holes get about 18 minutes and AH holes about 10, plus the walk. The times on the card include both.</span></li>
+          <li><b>15:30</b><span>Reach the Neude for holes 4 and 5.</span></li>
+          <li><b>16:50</b><span>Play two Albert Heijns by the station: Hoog Catharijne, then Stationsplein.</span></li>
+          <li><b>17:05</b><span>Hole 9 is dinner: one broodje each from AH Stationsplein. Break until 18:05. The team behind draws a power-up.</span></li>
+          <li><b>18:05</b><span>Start the back nine at The Postillon on the Lijnmarkt.</span></li>
+          <li><b>18:55</b><span>The longest walk comes next: from the Twijnstraat to the Nachtegaalstraat, about 18 minutes.</span></li>
+          <li><b>21:15</b><span>Play hole 18 at Café 't Pandje, which opens at 21:00, then add up the card. The losers buy the winners' last round.</span></li>
+        </ol>
+      </div>
+      <div style="display:grid;gap:20px">
+        <div>
+          <h3>Before you go</h3>
+          <ul class="plain">
+            <li>Check opening hours that week. Bar Vivid opens at 17:30 and Café 't Pandje at 21:00, and three of the Albert Heijns close at 21:00, so this order is built for a Saturday. AH Voorstraat is closed on Sundays.</li>
+            <li>There's no restaurant on the route. Dinner is the broodje at hole 9, so eat a proper lunch first.</li>
+            <li>Bring a bank card. Albert Heijn takes debit cards and Mastercard, but not every foreign card.</li>
+            <li>Budget roughly €50–60 per person. That's an estimate, not a menu price.</li>
+            <li>Plan your way home and don't drive. Utrecht Centraal is about a 15-minute walk from the Nobelstraat.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Pacing</h3>
+          <p style="margin:0">Only the 10 pub holes have alcohol, and sharing a drink keeps each player to about half of what's on the card. The AH holes and the two water hazards are your breathers. Eat a proper lunch, have water between holes, and drop out or swap to 0.0 whenever you want.</p>
+        </div>
+        <div>
+          <h3>Backups</h3>
+          <ul class="plain">
+            <li>For the front nine: Bierlokaal de Luifel (Neude 35-36) or Café de Zaak (Korte Minrebroederstraat 9).</li>
+            <li>For the back nine: Café Jan de Winter (Oudegracht 170) or Theatercafé The Bastard (Jansveld 17).</li>
+            <li>If an Albert Heijn is closed: AH to go in the station hall stays open until 01:00.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="reset" id="reset"></div>
+  <p>Addresses and Saturday opening hours come from Google Maps listings, checked on 9 November 2026. Pubs change hours, so check before you go. Drink sizes and pars are suggestions.</p>
+</footer>

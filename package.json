@@ -1,0 +1,15 @@
+{
+  "name": "pubgolf-utrecht",
+  "version": "1.0.0",
+  "description": "An 18-hole pubgolf course through central Utrecht: scorecard, route, power-ups, rules and a plan for the day.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/preview.mjs",
+    "start": "npm run build && npm run preview"
+  }
+}
