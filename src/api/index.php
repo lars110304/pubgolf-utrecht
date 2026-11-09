@@ -5,6 +5,8 @@
 //                  {"op":"team","team":"a","name":"..","p1":"..","p2":".."}
 //                  {"op":"score","team":"a","hole":3,"strokes":5}   (strokes 0 clears the hole)
 //                  {"op":"powers","team":"a","powers":[{"id":"gimme","used":false}]}
+//                  {"op":"penalty","team":"a","id":"k3x9q","reason":"Spilling","points":1}   (points -10 to 10)
+//                  {"op":"unpenalty","id":"k3x9q"}
 //                  {"op":"reset"}
 // Every POST answers with the whole game, so the page can redraw from it.
 // Connection settings come from .env (see .env.example), never from the browser.
@@ -43,11 +45,17 @@ function read_game(PDO $db, string $game): array {
     $q->execute([$game]);
     $locks = array_map('intval', $q->fetchAll(PDO::FETCH_COLUMN));
 
+    $q = $db->prepare('SELECT id, team, reason, points FROM pubgolf_penalties WHERE game = ? ORDER BY created_at, id');
+    $q->execute([$game]);
+    $pens = [];
+    foreach ($q as $r) $pens[$r['team']][] = ['id' => $r['id'], 'reason' => $r['reason'], 'points' => (int) $r['points']];
+
     foreach (['a', 'b'] as $t) {
         // A team may have scores before its names were ever saved; the page fills in default names.
         $teams[$t] ??= ['name' => null, 'p1' => null, 'p2' => null, 'scores' => (object) [], 'powers' => []];
         if (!empty($scores[$t])) $teams[$t]['scores'] = $scores[$t];
         $teams[$t]['powers'] = $powers[$t] ?? [];
+        $teams[$t]['penalties'] = $pens[$t] ?? [];
     }
     return ['teams' => $teams, 'locks' => $locks, 'saved' => true];
 }
@@ -59,7 +67,9 @@ function hole_locked(PDO $db, string $game, int $hole): bool {
 }
 
 function text(mixed $v, int $max): string {
-    return mb_substr(trim(is_string($v) ? $v : ''), 0, $max);
+    // First $max characters, without needing the mbstring extension (not every PHP install has it).
+    $s = trim(is_string($v) ? $v : '');
+    return preg_match('/^.{0,' . $max . '}/us', $s, $m) ? $m[0] : '';
 }
 
 function team_of(array $in): string {
@@ -110,6 +120,22 @@ function apply_op(PDO $db, string $game, array $in): void {
                 $seen[$id] = true;
                 $ins->execute([$game, $t, $id, !empty($p['used']) ? 1 : 0, $i]);
             }
+        } elseif ($op === 'penalty') {
+            $t = team_of($in);
+            $id = $in['id'] ?? '';
+            $points = filter_var($in['points'] ?? null, FILTER_VALIDATE_INT);
+            $reason = text($in['reason'] ?? '', 64);
+            if (!is_string($id) || !preg_match('/^[a-z0-9]{4,16}$/', $id)) { $db->rollBack(); fail(400, 'bad penalty id'); }
+            if ($points === false || $points < -10 || $points > 10 || $points === 0) { $db->rollBack(); fail(400, 'points must be -10 to 10'); }
+            if ($reason === '') $reason = 'Penalty';
+            // Adding the same id twice (a phone retrying) keeps one row.
+            $db->prepare('DELETE FROM pubgolf_penalties WHERE game = ? AND id = ?')->execute([$game, $id]);
+            $db->prepare('INSERT INTO pubgolf_penalties (game, id, team, reason, points) VALUES (?, ?, ?, ?, ?)')
+               ->execute([$game, $id, $t, $reason, $points]);
+        } elseif ($op === 'unpenalty') {
+            $id = $in['id'] ?? '';
+            if (!is_string($id) || !preg_match('/^[a-z0-9]{4,16}$/', $id)) { $db->rollBack(); fail(400, 'bad penalty id'); }
+            $db->prepare('DELETE FROM pubgolf_penalties WHERE game = ? AND id = ?')->execute([$game, $id]);
         } elseif ($op === 'reset') {
             foreach (TABLES as $table) {
                 $db->prepare("DELETE FROM $table WHERE game = ?")->execute([$game]);

@@ -34,3 +34,15 @@ CREATE TABLE IF NOT EXISTS pubgolf_locks (
   hole INT NOT NULL,
   PRIMARY KEY (game, hole)
 );
+
+-- Penalty points and minigame results, logged per team from the scorecard. Not tied to a hole.
+-- id is made by the page, so the same SQL works on MySQL and SQLite. points can be negative (a won minigame).
+CREATE TABLE IF NOT EXISTS pubgolf_penalties (
+  game VARCHAR(64) NOT NULL,
+  id VARCHAR(16) NOT NULL,
+  team CHAR(1) NOT NULL,
+  reason VARCHAR(64) NOT NULL,
+  points INT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (game, id)
+);

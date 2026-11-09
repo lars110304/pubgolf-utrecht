@@ -13,7 +13,7 @@ const dist = join(root, "dist");
 // Every page of the site, in nav order. `nav` is the label in the menu (the first page is the brand link).
 // `scripts` lists which shared scripts a page needs; `standalone` pages are complete documents of their own.
 const PAGES = [
-  { file: "index.html", nav: "⛳ Home", title: "Pubgolf Utrecht", src: "home.html", scripts: ["course.js", "app.js"],
+  { file: "index.html", nav: "Pubgolf", title: "Pubgolf Utrecht", src: "home.html", scripts: ["course.js", "app.js"],
     desc: "An 18-hole, par 18 pubgolf course through central Utrecht for two teams of two, with scorecard, route, power-ups, rules and a plan for the day." },
   { file: "scorecard.html", nav: "Scorecard", title: "Scorecard · Pubgolf Utrecht", src: "scorecard.html", scripts: ["course.js", "app.js"],
     desc: "Count each team's sips hole by hole. Scores are saved on this device." },
@@ -21,6 +21,8 @@ const PAGES = [
     desc: "The map, the 18 stops in order and walking directions through central Utrecht." },
   { file: "powerups.html", nav: "Power-ups", title: "Power-ups · Pubgolf Utrecht", src: "powerups.html", scripts: ["course.js", "app.js"],
     desc: "Draw power-up cards and mark them used." },
+  { file: "minigames.html", nav: "Minigames", title: "Minigames · Pubgolf Utrecht", src: "minigames.html", scripts: [],
+    desc: "Minigames between the bars, and what they cost in strokes." },
   { file: "rules.html", nav: "Rules", title: "Rules · Pubgolf Utrecht", src: "rules.html", scripts: [],
     desc: "How a hole works, the Albert Heijn holes, free passes and penalties." },
   { file: "plan.html", nav: "Plan", title: "The plan · Pubgolf Utrecht", src: "plan.html", scripts: [],
@@ -32,10 +34,19 @@ const SHARED = ["styles.css", "nav.css", "course.js", "app.js"];
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
+// On phones the links fold into a menu behind a hamburger button; on wider screens they sit in a row.
+const NAV_SCRIPT = `<script>(function(){var n=document.currentScript.previousElementSibling,b=n.querySelector(".nav-toggle");
+function set(o){n.classList.toggle("open",o);b.setAttribute("aria-expanded",o);b.setAttribute("aria-label",o?"Close menu":"Open menu");}
+b.addEventListener("click",function(){set(!n.classList.contains("open"));});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&n.classList.contains("open")){set(false);b.focus();}});
+document.addEventListener("click",function(e){if(!n.contains(e.target))set(false);});})();</script>`;
+
 function navHtml(current) {
   const [home, ...rest] = PAGES;
   const link = (p, cls) => `<a${cls ? ` class="${cls}"` : ""} href="${p.file}"${p.file === current ? ' aria-current="page"' : ""}>${p.nav}</a>`;
-  return `<nav class="site-nav" aria-label="Main"><div class="nav-in">${link(home, "brand")}${rest.map((p) => link(p)).join("")}</div></nav>`;
+  const toggle = `<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span></span><span></span><span></span></button>`;
+  return `<nav class="site-nav" aria-label="Main"><div class="nav-in">${link(home, "brand")}${toggle}` +
+    `<div class="nav-links" id="nav-links">${rest.map((p) => link(p)).join("")}</div></div></nav>\n${NAV_SCRIPT}`;
 }
 
 // 1. Check the course before building.
@@ -54,7 +65,7 @@ async function checkCourse() {
   const ah = holes.filter((h) => h.kind === "ah").length;
   if (ah !== 8) problems.push(`expected 8 Albert Heijn holes, found ${ah}`);
   for (const h of ctx.HOLES) {
-    for (const k of ["name", "addr", "lat", "lng", "t", "drink", "kind"]) if (h[k] == null) problems.push(`${h.name || "a stop"} is missing ${k}`);
+    for (const k of ["name", "addr", "lat", "lng", "drink", "kind"]) if (h[k] == null) problems.push(`${h.name || "a stop"} is missing ${k}`);
     if (h.kind && !["pub", "ah"].includes(h.kind)) problems.push(`${h.name} has kind "${h.kind}"; use "pub" or "ah"`);
   }
   if (problems.length) throw new Error("Course check failed:\n- " + problems.join("\n- "));

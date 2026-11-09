@@ -15,9 +15,9 @@ npm start         # build + preview
 
 `npm run dev` also prints a Network URL. Open it on a phone on the same Wi-Fi to test with real fingers.
 
-The site is a set of separate pages with one navigation bar on top: Home, Scorecard, Route, Power-ups, Rules, Plan and Finger Chooser (`dist/index.html`, `scorecard.html`, `route.html`, `powerups.html`, `rules.html`, `plan.html`, `finger-chooser.html`).
+The site is a set of separate pages with one navigation bar on top (a hamburger menu on phones): Home, Scorecard, Route, Power-ups, Rules, Plan and Finger Chooser (`dist/index.html`, `scorecard.html`, `route.html`, `powerups.html`, `rules.html`, `plan.html`, `finger-chooser.html`).
 
-The build fails if the course is broken: it checks there are 18 holes numbered in order, par 1 on every hole (9 out and 9 in), exactly 8 Albert Heijn holes, and that every hole has a name, address, time, drink and coordinates. It also checks that every script parses and every link between pages points at a page that exists.
+The build fails if the course is broken: it checks there are 18 holes numbered in order, par 1 on every hole (9 out and 9 in), exactly 8 Albert Heijn holes, and that every hole has a name, address, drink and coordinates. It also checks that every script parses and every link between pages points at a page that exists.
 
 ## Score database (PHP)
 
@@ -45,7 +45,7 @@ There is no login: anyone with the link can change the scores.
 
 Everything about the course is in `src/course.js`:
 
-- `HOLES`: the holes in walking order. Each has a number, start time, `kind` (`pub` or `ah`), name, address, drink, par, coordinates and Google Maps place ID. `unit: "bite"` marks food holes, `water: 1` marks water hazards and `breakAfter` adds a break row to the scorecard.
+- `HOLES`: the holes in walking order. Each has a number, `kind` (`pub` or `ah`), name, address, drink, par, coordinates and Google Maps place ID. `unit: "bite"` marks food holes, `water: 1` marks water hazards and `breakAfter` adds a break row to the scorecard.
 - `CANAL` and `STREETS`: the canal line and street names drawn on the map.
 
 The other files:

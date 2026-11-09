@@ -46,7 +46,7 @@ function connect(?string $envDir): PDO {
     return new PDO($dsn, env('DB_USER'), env('DB_PASS'), $options);
 }
 
-const TABLES = ['pubgolf_teams', 'pubgolf_scores', 'pubgolf_powers', 'pubgolf_locks'];
+const TABLES = ['pubgolf_teams', 'pubgolf_scores', 'pubgolf_powers', 'pubgolf_locks', 'pubgolf_penalties'];
 
 function table_exists(PDO $db, string $table): bool {
     try { $db->query("SELECT 1 FROM $table LIMIT 1"); return true; } catch (PDOException $e) { return false; }
