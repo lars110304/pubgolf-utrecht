@@ -8,7 +8,9 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "dev": "node scripts/dev.mjs",
+    "migrate": "php scripts/migrate.php",
+    "build":"node scripts/build.mjs",
     "preview": "node scripts/preview.mjs",
     "start": "npm run build && npm run preview"
   }

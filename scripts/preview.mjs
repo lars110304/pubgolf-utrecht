@@ -10,7 +10,7 @@ const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", "
 
 createServer(async (req, res) => {
   const path = normalize(decodeURIComponent(new URL(req.url, "http://x").pathname)).replace(/^([/\\])+/, "");
-  const file = join(dist, path || "index.html");
+  const file = join(dist, !path ? "index.html" : /\.[a-z]+$/i.test(path) ? path : path + ".html"); // /scorecard -> scorecard.html
   if (!file.startsWith(dist)) { res.writeHead(403).end(); return; }
   try {
     const body = await readFile(file);

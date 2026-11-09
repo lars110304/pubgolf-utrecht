@@ -1,0 +1,4 @@
+# Never serve environment files or the schema from the web.
+<FilesMatch "^\.env|\.sql$">
+  Require all denied
+</FilesMatch>

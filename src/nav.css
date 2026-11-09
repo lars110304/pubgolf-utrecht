@@ -1,0 +1,19 @@
+/* Site navigation, shared by every page (including the Finger Chooser, which has its own styles). */
+.site-nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; flex: none;
+  background: var(--band, #14523a); color: var(--on-band, #f1f4ec);
+  border-bottom: 1px solid color-mix(in srgb, var(--on-band, #f1f4ec) 20%, transparent);
+  font-family: var(--body, "Karla", "Helvetica Neue", Arial, sans-serif);
+}
+.site-nav .nav-in {
+  max-width: 1040px; margin-inline: auto; display: flex; align-items: center; gap: 20px; overflow-x: auto; scrollbar-width: none;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px));
+  /* fade the right edge so it is clear the menu scrolls on narrow screens */
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+}
+.site-nav a { color: inherit; text-decoration: none; font-weight: 700; font-size: .92rem; padding-block: 11px; white-space: nowrap; }
+.site-nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.site-nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.site-nav .brand { font: 400 1.05rem/1 var(--display, "Bevan", Georgia, serif); margin-right: 6px; }
+.site-nav a:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
