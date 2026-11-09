@@ -1,6 +1,6 @@
 # Pubgolf Utrecht
 
-An 18-hole, par 72 pubgolf course through central Utrecht for two teams of two: 10 pubs and 8 Albert Heijns, with no restaurants. The Albert Heijn holes are non-alcoholic, because drinking on the street is banned in much of the centre. The page has a scorecard that counts strokes per team, a route map with walking directions, a deck of power-ups, the rules and a plan for a Saturday.
+An 18-hole, par 72 pubgolf course through central Utrecht for two teams of two: 10 pubs and 8 Albert Heijns, with no restaurants. The Albert Heijn holes keep it cheap: buy the drink in the shop and finish it outside. Drinking on the street is banned in much of the centre, so check the alcohol-free zones first. The page has a scorecard that counts strokes per team, a route map with walking directions, a deck of power-ups, the rules and a plan for a Saturday.
 
 ## Run it
 
